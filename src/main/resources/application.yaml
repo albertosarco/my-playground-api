@@ -1,0 +1,19 @@
+server:
+  port: 8080
+
+# actuator
+management:
+  endpoints:
+    health:
+      show-components: always
+      show-details: always
+    web:
+      base-path: /
+  health:
+    redis:
+      enabled: false
+
+# swagger
+openapi:
+  dev-url: http://localhost:8080
+  prod-url: https://example-api.com

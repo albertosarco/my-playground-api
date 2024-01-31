@@ -1,0 +1,11 @@
+# Build: docker build -t my-playground-api .
+FROM eclipse-temurin:17
+
+# Add the jar file to the container
+COPY target/my-playground-api.jar app.jar
+
+# Expose the port our application will run on
+EXPOSE 8080
+
+# Run the application on startup
+ENTRYPOINT ["java","-jar","/app.jar"]

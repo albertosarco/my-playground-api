@@ -1,0 +1,23 @@
+# Build: docker build -t my-playground-api .
+FROM public.ecr.aws/amazonlinux/amazonlinux:2
+
+RUN yum install -y java-17-amazon-corretto-headless bc bind-utils less vi tar gzip aws-cli wget unzip
+
+RUN yum upgrade -y
+
+RUN wget -O jq https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64
+
+RUN chmod +x ./jq
+
+RUN cp jq /usr/bin
+
+ENV JAVA_HOME=/usr/lib/jvm/jre
+
+# Add the jar file to the container
+COPY target/my-playground-api.jar app.jar
+
+# Expose the port our application will run on
+EXPOSE 8080
+
+# Run the application on startup
+ENTRYPOINT ["java","-jar","/app.jar"]

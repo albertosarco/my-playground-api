@@ -1,0 +1,17 @@
+# Build: docker build -t my-playground-api .
+FROM eclipse-temurin:17-jdk-alpine@sha256:0e6e494ac4da6509a038b7689250bc7ea68beaf8a5efbca5ed7c8692457b283c
+
+# Add the jar file to the container
+COPY target/my-playground-api.jar app.jar
+
+# Add a user to run our application so that it doesn't need to run as root
+RUN addgroup -S usergroup && adduser -S user -G usergroup
+
+# Set the user to run our application
+USER user
+
+# Expose the port our application will run on
+EXPOSE 8080
+
+# Run the application on startup
+ENTRYPOINT ["java","-jar","/app.jar"]
